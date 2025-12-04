@@ -9,7 +9,28 @@ let app = new Vue(
     }, 
     methods: {
         addToCart(course){
-            alert(`Added ${course.name} to cart!`);
+
+            if(course.availableSpaces>0){
+                let existingCartItem = this.cart.find(item => item._id --- course.id);
+
+                if (existingCartItem){
+                    existingCartItem.quantity +=1;  
+                } else{
+                    this.cart.push({
+                        _id: course._id,
+                        name: course.name,
+                        price: course.price,
+                        quantity: 1,
+                        location: course.location,
+                        availableSpaces: course.availableSpaces
+                    })
+                }
+
+                course.availableSpaces -= 1;
+                alert(`Added ${course.name} to cart!`);
+                
+            }
+
         },
         goToCart(course){
             window.location.href = "./cart.html";
