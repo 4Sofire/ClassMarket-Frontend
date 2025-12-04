@@ -5,10 +5,14 @@ let app = new Vue(
         firstname:'Kyle',
         lastname: 'Walker',
         courses: [],
+        cart: [],
     }, 
     methods: {
         addToCart(course){
             alert(`Added ${course.name} to cart!`);
+        },
+        goToCart(course){
+            window.location.href = "./cart.html";
         },
     },
     computed: {
