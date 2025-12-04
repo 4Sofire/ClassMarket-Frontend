@@ -6,7 +6,11 @@ let app = new Vue(
         lastname: 'Walker',
         courses: [],
     }, 
-    methods: {},
+    methods: {
+        addToCart(course){
+            alert(`Added ${course.name} to cart!`);
+        },
+    },
     computed: {
         fullname: function(){
             return this.firstname + ' ' + this.lastname;

@@ -74,7 +74,7 @@
   <div class="grid py-6 px-6">
     <div class="columns is-multiline">
       <div v-for="course in courses" class="column is-one-quarter">
-        <div class="card">
+        <div class="card" style="height: 100%;">
           <div class="card-image">
             <figure class="image is-4by3">
               <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image"/>
@@ -85,18 +85,16 @@
           <div class="media">
             
             <div class="media-content">
-              <p class="title is-4">John Smith</p>
-              <p class="subtitle is-6">@johnsmith</p>
+              <p class="title is-4">{{course.name}}</p>
+              <p class="subtitle is-6">{{course.location}}</p>
             </div>
           </div>
 
           <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
-            iaculis mauris. <a>@bulmaio</a>. <a href="#">#css</a>
-            <a href="#">#responsive</a>
-            <br />
-            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            <button type="button" class="button is-primary mt-4">Add to Cart</button>
+            <p>{{course.description}}</p>
+            <p class="has-text-primary has-text-weight-semibold">£{{course.price}}</p>
+            <p>Spaces: {{course.availableSpaces}}</p>
+            <button type="button" class="button is-primary mt-4 is-block" @click="addToCart(course)">Add to Cart</button>
           </div>
         </div>
       </div>
