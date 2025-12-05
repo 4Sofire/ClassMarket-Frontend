@@ -49,7 +49,7 @@
     <div class="grid">
       <div class="cell">
         <div class="select is-fullwidth">
-          <select>
+          <select v-model="sortOrder" @change="sort">
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
@@ -57,7 +57,7 @@
       </div>
       <div class="cell">
         <div class="select is-fullwidth">
-          <select >
+          <select v-model="sortAttribute" @change="sort">
             <option value="name">Name</option>
             <option value="space">Space</option>
             <option value="location">Location</option>
