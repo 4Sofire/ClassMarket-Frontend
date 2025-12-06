@@ -44,6 +44,12 @@ let app = new Vue(
             else if(this.sortAttribute === 'name' && this.sortOrder === 'desc'){
                 this.courses.sort(function(a, b) { return a.name.localeCompare(b.name)}).reverse()
             }
+            else if(this.sortAttribute === 'location' && this.sortOrder === 'asc'){
+                this.courses.sort(function (a, b) {return a.location.localeCompare(b.location)})
+            }
+            else if(this.sortAttribute ==='location' && this.sortOrder === 'desc'){
+                this.courses.sort(function (a, b) {return a.location.localeCompare(b.location)}).reverse()
+            }
         }
     },
     computed: {
