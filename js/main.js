@@ -8,6 +8,7 @@ let app = new Vue(
         cart: [],
         sortAttribute: 'name',
         sortOrder: 'asc',
+        searchQuery: '',
     }, 
     methods: {
         addToCart(course){
@@ -64,6 +65,15 @@ let app = new Vue(
     computed: {
         fullname: function(){
             return this.firstname + ' ' + this.lastname;
+        },
+        searchedCourses: function(){
+            if (this.searchQuery.trim() === ''){
+                return this.courses;
+            }
+            
+            return this.courses.filter((course)=>{
+                return course.name.toUpperCase().includes(this.searchQuery.toUpperCase().trim())
+            })
         },
     },
     beforeMount() {

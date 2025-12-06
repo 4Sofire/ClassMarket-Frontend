@@ -43,7 +43,7 @@
 
   <div class="card px-6 py-6 my-6">
     <div class="my-6">
-      <input class="input" type="text" placeholder="Text input" />
+      <input class="input" type="text" placeholder="Text input" v-model="searchQuery"/>
     </div>
 
     <div class="grid">
@@ -73,7 +73,7 @@
   
   <div class="grid py-6 px-6">
     <div class="columns is-multiline">
-      <div v-for="course in courses" class="column is-one-quarter">
+      <div v-for="course in searchedCourses" class="column is-one-quarter">
         <div class="card" style="height: 100%;">
           <div class="card-image">
             <figure class="image is-4by3">
