@@ -50,6 +50,15 @@ let app = new Vue(
             else if(this.sortAttribute ==='location' && this.sortOrder === 'desc'){
                 this.courses.sort(function (a, b) {return a.location.localeCompare(b.location)}).reverse()
             }
+             else if (this.sortAttribute === "space" && this.sortOrder === 'asc') {
+                this.courses.sort(function(a, b) { return a.availableSpaces - b.availableSpaces});
+            }else if (this.sortAttribute === "space" && this.sortOrder === 'desc') {
+                this.courses.sort(function(a, b) { return a.availableSpaces - b.availableSpaces}).reverse();
+            }else if (this.sortAttribute === "price" && this.sortOrder === 'asc') {
+                this.courses.sort(function(a, b) { return a.price - b.price});
+            }else if (this.sortAttribute === "price" && this.sortOrder === 'desc') {
+                this.courses.sort(function(a, b) { return a.price - b.price}).reverse();
+            }
         }
     },
     computed: {
