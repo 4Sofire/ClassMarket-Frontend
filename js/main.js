@@ -5,7 +5,7 @@ let app = new Vue(
         firstname:'Kyle',
         lastname: 'Walker',
         courses: [],
-        cart: [],
+        cart: JSON.parse(sessionStorage.getItem("cart")) || [],
         sortAttribute: 'name',
         sortOrder: 'asc',
         searchQuery: '',
@@ -29,6 +29,7 @@ let app = new Vue(
                 }
 
                 course.availableSpaces -= 1;
+                sessionStorage.setItem("cart", JSON.stringify(this.cart));
                 alert(`Added ${course.name} to cart!`);
                 
             }
