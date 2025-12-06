@@ -72,7 +72,9 @@ let app = new Vue(
             }
             
             return this.courses.filter((course)=>{
-                return course.name.toUpperCase().includes(this.searchQuery.toUpperCase().trim())
+                return course.name.toUpperCase().includes(this.searchQuery.toUpperCase().trim()) ||
+                    course.location.toUpperCase().includes(this.searchQuery.toUpperCase().trim()) ||
+                    course.description.toUpperCase().includes(this.searchQuery.toUpperCase().trim())
             })
         },
     },
