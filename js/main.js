@@ -80,7 +80,7 @@ let app = new Vue(
         },
     },
     beforeMount() {
-        fetch("https://after-mdx-backend.onrender.com/api/courses/pages")
+        fetch("https://classmarket-backend.onrender.com/api/courses/")
         .then(function(response){return response.json();
         })
         .then((data)=>{
