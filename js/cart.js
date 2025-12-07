@@ -85,7 +85,7 @@ let app = new Vue({
         orderDate: new Date().toISOString()
       };
 
-      fetch('https://after-mdx-backend.onrender.com/checkout', {
+      fetch('https://classmarket-backend.onrender.com/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -119,4 +119,5 @@ let app = new Vue({
       return item.price * item.quantity;
     }
   }
+
 })
