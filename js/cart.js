@@ -3,8 +3,8 @@ let app = new Vue({
   data: {
     cart: JSON.parse(sessionStorage.getItem("cart")) || [],
     orderDetails: {
-      firstName: '',  // Fixed from firstNmae
-      lastName: '',   // Fixed from lastNmae
+      firstName: '',
+      lastName: '',
       phone: '',
     },
     errorMessage: ''
@@ -13,14 +13,14 @@ let app = new Vue({
     goToCart(){},
 
     increaseQuantity(cartItem){
-    // Check if we've reached the maximum available spaces
-    if(cartItem.quantity >= cartItem.availableSpaces) {
-      alert("No more available spaces for " + cartItem.name);
-      return;
-    }
-    
-    cartItem.quantity += 1;
-    sessionStorage.setItem("cart", JSON.stringify(this.cart));  
+      // Check if we've reached the maximum available spaces
+      if(cartItem.quantity >= cartItem.availableSpaces) {
+        alert("No more available spaces for " + cartItem.name);
+        return;
+      }
+      
+      cartItem.quantity += 1;
+      sessionStorage.setItem("cart", JSON.stringify(this.cart));  
     },
     decreaseQuantity(cartItem){
       if(cartItem.quantity > 1){
@@ -32,7 +32,6 @@ let app = new Vue({
       this.cart.splice(index, 1);
       sessionStorage.setItem("cart", JSON.stringify(this.cart));  
     },
-    // Add this method to your methods object in cart.js
 
     checkout(){
       this.errorMessage = '';
@@ -63,43 +62,36 @@ let app = new Vue({
         return;
       }
 
-      let totalPrice = 0;
-      this.cart.forEach(item => {
-        totalPrice += item.price * item.quantity;
-      });
+      // Format order details to match backend expectations
+      const orderDetailsArray = this.cart.map(item => ({
+        course: item.name,
+        space: item.quantity
+      }));
 
-      const orderData = {
-        customer: {
-          firstName: this.orderDetails.firstName.trim(),
-          lastName: this.orderDetails.lastName.trim(),
-          phone: this.orderDetails.phone.trim()
-        },
-        order: this.cart.map(item => ({
-          courseId: item.id,
-          courseName: item.name,
-          quantity: item.quantity,
-          price: item.price,
-          subtotal: item.price * item.quantity
-        })),
-        totalPrice: totalPrice,
-        orderDate: new Date().toISOString()
-      };
+      // Create form data matching backend structure
+      const formData = new URLSearchParams();
+      formData.append('firstName', this.orderDetails.firstName.trim());
+      formData.append('lastName', this.orderDetails.lastName.trim());
+      formData.append('phone', this.orderDetails.phone.trim());
+      formData.append('orderDetails', JSON.stringify(orderDetailsArray));
 
       fetch('https://classmarket-backend.onrender.com/checkout', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify(orderData)
+        body: formData.toString()
       })
       .then(response => {
         if(!response.ok){
-          throw new Error('Order submission failed. Please try again.');
+          return response.json().then(err => {
+            throw new Error(err.error || 'Order submission failed. Please try again.');
+          });
         }
         return response.json();
       })
       .then(data => {
-        alert('Order placed successfully! Order ID: ' + (data.orderId || 'N/A'));
+        alert('Order placed successfully!');
         
         this.cart = [];
         sessionStorage.removeItem('cart');
@@ -110,7 +102,7 @@ let app = new Vue({
       })
       .catch(error => {
         console.error('Error:', error);
-        this.errorMessage = 'There was an error processing your order. Please try again.';
+        this.errorMessage = error.message || 'There was an error processing your order. Please try again.';
       });
     }
   },
